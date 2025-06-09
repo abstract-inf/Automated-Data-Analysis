@@ -16,4 +16,5 @@ class ADA:
 
     def save_to_pdf(self):
         # Implement PDF saving logic here
+        # بخ
         raise NotImplementedError("This function is not yet implemented.")
