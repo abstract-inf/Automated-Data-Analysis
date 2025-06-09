@@ -1,8 +1,20 @@
 # preprocess.py
 import pandas as pd
+from utils import *
 
+"""
+- Nulls: 
+- data info: 
+- data categorization: ashqar
+- datetime: 
+- feature selection: 
+"""
 class Preprocess:
     def __init__(self, data: pd.DataFrame):
+        """
+        :param data: pd.DataFrame - The input data to be processed.
+        Initializes the Preprocess object with a DataFrame.
+        """
         self.data = data
 
     def check_nulls(self) -> pd.DataFrame:
