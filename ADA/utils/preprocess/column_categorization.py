@@ -1,6 +1,7 @@
 #import numpy as np
 import pandas as pd
 from scipy.stats import kruskal
+from pathlib import Path
 import json
 
 def categorize_columns(df: pd.DataFrame, target: str) -> dict:
@@ -46,12 +47,20 @@ def categorize_columns(df: pd.DataFrame, target: str) -> dict:
 
   else:
    raise ValueError(f"Column {col} does not fit any category.")
- 
- output_file = "columns_categories.json"
- with open(output_file, 'w') as f:
+ # Get the current script's directory (utils/modeling/)
+ current_dir = Path(__file__).parent
+
+ # Navigate two levels up to the root, then into "data" folder
+ target_dir = current_dir.parent.parent / "saved_data"
+ target_dir.mkdir(exist_ok=True)  # Create the folder if it doesn't exist
+
+ # Define the JSON file path
+ json_path = target_dir / "columns_categories.json"
+
+ with open(json_path, 'w') as f:
   json.dump(columns_categories, f, indent=4)  # `indent=4` makes the JSON file human-readable
 
- print(f"Dictionary saved to {output_file}")
+ print(f"Dictionary saved to {json_path}")
  return columns_categories
 
 
@@ -132,7 +141,7 @@ def is_datetime(col):
 if __name__ == "__main__":
  # Example usage
  import os
- path = r"ADA\datasets"
+ path = r"C:\Users\DELL\OneDrive - AL-Hussien bin Abdullah Technical University\Attachments\HTU\Projects\Automated-Data-Analysis\ADA\datasets"
  targets = ['Boxes Shipped','money', 'Outcome', 'liveness_%','Survived']
  for file, target in zip(os.listdir(path),targets):
   if file.endswith('.csv') and file == 'coffe.csv':

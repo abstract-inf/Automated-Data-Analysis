@@ -1,0 +1,18 @@
+{
+    "continuous": [
+        "money"
+    ],
+    "discrete": [],
+    "nominal": [],
+    "ordinal": [
+        "cash_type",
+        "coffee_name"
+    ],
+    "string": [
+        "card"
+    ],
+    "datetime": [
+        "date",
+        "datetime"
+    ]
+}
