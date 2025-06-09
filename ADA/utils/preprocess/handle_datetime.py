@@ -43,22 +43,41 @@ def find_datetime_columns(df: pd.DataFrame) -> list[str]:
 
     return datetime_columns
 
-def find_and_merge_date_columns(df: pd.DataFrame) -> pd.DataFrame:
+def find_date_columns(df: pd.DataFrame):
+    """
+    Identifies day, month, and year columns in the DataFrame.
+    and returns them as separate Series.
+    Args:
+        df (pd.DataFrame): The input DataFrame.
+    Returns:
+        tuple: A tuple containing three Series: day, month, and year.
+        If a column is not found, its corresponding Series will be None.
+    """
+    day = None
+    month = None
+    year = None
     for column in df.columns:
-        if ["day", "month", "year"] in column.lower():
-            # Check if the column is already a datetime type
-            if not pd.api.types.is_datetime64_any_dtype(df[column]):
-                # Convert to datetime if not already
-                df[column] = pd.to_datetime(df[column], errors='coerce')
-            # Merge the date columns into a single datetime column
-            df['date'] = df['date'].combine_first(df[column])
-            df.drop(columns=[column], inplace=True)
-    
+        if "day" in column.lower():
+            df[column] = pd.to_datetime(df[column], dayfirst=True, errors='coerce')  # Ensure day is parsed correctly
+            if pd.api.types.is_datetime64_any_dtype(df[column]):
+                day = df[column]
+        elif "month" in column.lower():
+            df[column] = pd.to_datetime(df[column], format='%m', errors='coerce')  # Ensure month is parsed correctly
+            if pd.api.types.is_datetime64_any_dtype(df[column]):
+                month = df[column]
+        elif "year" in column.lower():
+            df[column] = pd.to_datetime(df[column], format='%Y', errors='coerce')  # Ensure year is parsed correctly
+            if pd.api.types.is_datetime64_any_dtype(df[column]):
+                year = df[column]
+        else:
+            continue
+
+    return day, month, year
        
     
 if __name__ == "__main__":
     # List of specific dataset names to process.
-    datasets_names = ["Chocolate Sales.csv", "coffe.csv", "diabetes.csv", "titanic.csv"]
+    datasets_names = ["Chocolate Sales.csv", "coffe.csv", "diabetes.csv", "titanic.csv", "video-games-2022.csv"]
 
     for file_name in datasets_names:
         print("="*50)
@@ -68,11 +87,12 @@ if __name__ == "__main__":
         df = pd.read_csv(file_path)
         
         # Find datetime columns in the DataFrame
-        columns = find_datetime_columns(df)
-        if columns:
-            print(f"Identified datetime columns in {file_name}: {columns}")
-        else:
-            print(f"No datetime columns found in {file_name}.")
+        # columns = find_datetime_columns(df)
+        # if columns:
+        #     print(f"Identified datetime columns in {file_name}: {columns}")
+        # else:
+        #     print(f"No datetime columns found in {file_name}.")
 
-        
+        # Find and merge date columns if they exist
+        print(find_date_columns(df)) 
         
