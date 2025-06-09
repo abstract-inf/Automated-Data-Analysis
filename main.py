@@ -1,9 +1,10 @@
 # main.py
 import ADA
 from sklearn.datasets import load_iris
+
 # Load sample data
 data = load_iris(as_frame=True).frame
-print(data.head())
+# print(data.head())
 
 # Initialize ADA object with the data
 object = ADA(data)
