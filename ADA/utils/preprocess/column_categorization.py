@@ -68,6 +68,10 @@ def is_ordinal(col: pd.Series, target_col: pd.Series, threshold: float = 0.05) -
  """check if a categorical column is ordinal or nominal."""
  # Kruskal-Wallis test or similar statistical tests can be used to determine if a categorical column is ordinal.
  # For simplicity, we assume that if a categorical column has more than 2 unique values, it is nominal.
+ 
+ if not is_numeric(target_col):
+  return False  # Kruskal-Wallis requires numeric target
+ 
  df = pd.DataFrame({'col': col, 'target': target_col})
  
  groups = df['col'].unique()
