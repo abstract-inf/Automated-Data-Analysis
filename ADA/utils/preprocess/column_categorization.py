@@ -125,7 +125,7 @@ def is_datetime(col):
 if __name__ == "__main__":
  # Example usage
  import os
- path = r"C:\Users\DELL\OneDrive - AL-Hussien bin Abdullah Technical University\Attachments\HTU\Projects\Automated-Data-Analysis\ADA\datasets"
+ path = "ADA/datasets"
  targets = ['Boxes Shipped','money', 'Outcome', 'liveness_%','Survived']
  for file, target in zip(os.listdir(path),targets):
   if file.endswith('.csv') and file != 'spotify_2023.csv':
