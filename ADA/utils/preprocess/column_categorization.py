@@ -1,6 +1,7 @@
-import numpy as np
+#import numpy as np
 import pandas as pd
 from scipy.stats import kruskal
+import json
 
 def categorize_columns(df: pd.DataFrame, target: str) -> dict:
  """
@@ -45,6 +46,12 @@ def categorize_columns(df: pd.DataFrame, target: str) -> dict:
 
   else:
    raise ValueError(f"Column {col} does not fit any category.")
+ 
+ output_file = "columns_categories.json"
+ with open(output_file, 'w') as f:
+  json.dump(columns_categories, f, indent=4)  # `indent=4` makes the JSON file human-readable
+
+ print(f"Dictionary saved to {output_file}")
  return columns_categories
 
 
@@ -125,10 +132,10 @@ def is_datetime(col):
 if __name__ == "__main__":
  # Example usage
  import os
- path = "ADA/datasets"
+ path = r"C:\Users\DELL\OneDrive - AL-Hussien bin Abdullah Technical University\Attachments\HTU\Projects\Automated-Data-Analysis\ADA\datasets"
  targets = ['Boxes Shipped','money', 'Outcome', 'liveness_%','Survived']
  for file, target in zip(os.listdir(path),targets):
-  if file.endswith('.csv') and file != 'spotify_2023.csv':
+  if file.endswith('.csv') and file == 'coffe.csv':
    print(f"Processing file: {file} with target: {target}")
    df = pd.read_csv(os.path.join(path, file))
    result = categorize_columns(df, target)
