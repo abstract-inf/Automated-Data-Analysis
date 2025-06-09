@@ -1,5 +1,5 @@
 import pandas as pd
-from preprocess import check_nulls
+from nulls_checking import check_nulls
 
 def nulls_processing(df: pd.DataFrame, strategy: str = "drop") -> pd.DataFrame:
         """
@@ -22,6 +22,7 @@ def nulls_processing(df: pd.DataFrame, strategy: str = "drop") -> pd.DataFrame:
 
             if null_ratio >= threshold:
                 df = df.drop(columns=[col])
+                print(f"{col} has been droped")
                 continue  # Skip to next column
 
             # Handle based on strategy
@@ -44,11 +45,32 @@ def nulls_processing(df: pd.DataFrame, strategy: str = "drop") -> pd.DataFrame:
             elif strategy == "fill_bfill":
                 df[col] = df[col].fillna(method="bfill")
 
+            print(f"Dropped or filled column: {col}") # can be remoed after finishing
+
         return df
 
 
 if __name__ == "__main__":
     df = pd.read_csv(r"C:\ADA Project\Automated-Data-Analysis\ADA\datasets\coffe.csv")
-    print(check_nulls(df))
-    print(nulls_processing(df))
-    print(check_nulls(df))
+    print("\n Coffe Data")
+    print(f"Missing Data Before processing{check_nulls(df)}")
+    df = nulls_processing(df)
+    print(f"Missing Data After processing: {check_nulls(df)}")
+
+    df = pd.read_csv(r"C:\ADA Project\Automated-Data-Analysis\ADA\datasets\Chocolate Sales.csv")
+    print("\n Chocolate Data")
+    print(f"Missing Data Before processing{check_nulls(df)}")
+    df = nulls_processing(df)
+    print(f"Missing Data After processing: {check_nulls(df)}")
+
+    df = pd.read_csv(r"C:\ADA Project\Automated-Data-Analysis\ADA\datasets\diabetes.csv")
+    print("\n diabetes Data")
+    print(f"Missing Data Before processing{check_nulls(df)}")
+    df = nulls_processing(df)
+    print(f"Missing Data After processing: {check_nulls(df)}")
+
+    df = pd.read_csv(r"C:\ADA Project\Automated-Data-Analysis\ADA\datasets\titanic.csv")
+    print("\n titanic Data")
+    print(f"Missing Data Before processing{check_nulls(df)}")
+    df = nulls_processing(df)
+    print(f"Missing Data After processing: {check_nulls(df)}")
