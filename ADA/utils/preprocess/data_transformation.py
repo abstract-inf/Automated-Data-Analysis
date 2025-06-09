@@ -1,3 +1,4 @@
+from pathlib import Path
 import json
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler, MinMaxScaler
@@ -9,7 +10,20 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
  :returns pd.DataFrame: Transformed DataFrame.
 
  """
- with open('columns_categories.json', 'r') as f:
+
+ # Get the current script's directory (utils/modeling/)
+ current_dir = Path(__file__).parent
+
+ # Navigate two levels up to the root, then into "saved_data" folder
+ try:
+  target_dir = current_dir.parent.parent / "saved_data"
+ except Exception as e:
+  raise FileNotFoundError("The 'saved_data' directory does not exist. Please ensure the directory structure is correct.") from e
+
+ # Define the JSON file path
+ json_path = target_dir / "columns_categories.json"
+
+ with open(json_path, 'r') as f:
   columns_categories = json.load(f)
 
  transform_continuous_columns(df, columns_categories)
@@ -18,6 +32,8 @@ def transform_data(df: pd.DataFrame) -> pd.DataFrame:
  transform_ordinal_columns(df, columns_categories)
  transform_datetime_columns(df, columns_categories)
  drop_string_columns(df, columns_categories)
+ # Save the transformed DataFrame to a CSV file
+ export_transformed_data(df, target_dir / "transformed_data.csv")
  return df
  
 
@@ -62,12 +78,18 @@ def drop_string_columns(df, columns_categories):
   df.drop(col, axis=1, inplace=True)
  return df
 
+def export_transformed_data(df: pd.DataFrame, file_path: str) -> None:
+ """<b>Export the transformed DataFrame to a CSV file.</b>
  
+ :param df: pd.DataFrame - The DataFrame to export.
+ :param file_path: str - The path where the CSV file will be saved.
+ """
+ df.to_csv(file_path, index=False) 
  
 
 
 
 if __name__ == "__main__":
- transform_data(pd.read_csv(r'C:\Users\DELL\OneDrive - AL-Hussien bin Abdullah Technical University\Attachments\HTU\Projects\Automated-Data-Analysis\ADA\datasets\coffe.csv')).to_csv("transformed_coffe.csv", index=False)
+ transform_data(pd.read_csv(r'C:\Users\DELL\OneDrive - AL-Hussien bin Abdullah Technical University\Attachments\HTU\Projects\Automated-Data-Analysis\ADA\datasets\coffe.csv'))
 
  
