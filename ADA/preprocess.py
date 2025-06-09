@@ -16,13 +16,13 @@ class Preprocess:
         """
         self.data = data
 
-    def check_nulls(self) -> dict:
+    def check_nulls(self) -> pd.DataFrame:
         """
         Checks for null values in the DataFrame.
         """
         pass
 
-    def process_nulls(self, strategy: str = "drop") -> pd.DataFrame:
+    def process_nulls(self, strategy: str = "drop", columns: list = None) -> pd.DataFrame:
         """
         Processes null values (drops or fills by avg/mean).
         'strategy' can be 'drop' or 'fill'.
