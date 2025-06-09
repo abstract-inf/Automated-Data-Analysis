@@ -3,11 +3,10 @@ import pandas as pd
 from utils import *
 
 """
-- Nulls: 
-- data info: 
-- data categorization: ashqar
-- datetime: 
-- feature selection: 
+- Nulls, data info: Suhaib
+- data categorization: Ashqar
+- datetime: Yazan
+- feature selection: Ashqar
 """
 class Preprocess:
     def __init__(self, data: pd.DataFrame):

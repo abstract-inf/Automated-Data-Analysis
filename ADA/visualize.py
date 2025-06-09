@@ -2,6 +2,14 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
+"""
+- Categorical visualizations: Suhaib
+- Numerical visualizations: Suhaib
+- Time series visualizations: Yazan
+- Num-Cat: Ashqar
+"""
+
 class Visualize:
     @staticmethod
     def create_bar_chart_categorical(data: pd.DataFrame, column: str) -> None:
