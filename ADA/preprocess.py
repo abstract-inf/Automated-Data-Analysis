@@ -16,18 +16,31 @@ class Preprocess:
         """
         self.data = data
 
-    def check_nulls(self) -> pd.DataFrame:
+    def check_nulls(self) -> dict:
         """
         Checks for null values in the DataFrame.
         """
         pass
+
+    # def process_nulls(self, strategy: str = "drop", columns: list = None) -> pd.DataFrame:
+    #     """
+    #     Processes null values (drops or fills by avg/mean).
+    #     'strategy' can be 'drop' or 'fill'.
+    #     """
+    #     pass
 
     def process_nulls(self, strategy: str = "drop", columns: list = None) -> pd.DataFrame:
         """
         Processes null values (drops or fills by avg/mean).
         'strategy' can be 'drop' or 'fill'.
         """
+
+        # Will call check_nulls(), and just take from user df, and then send df to check_nulls(), 
+        # and get a dict from where will drop columns with null values    
         pass
+
+
+
 
     def print_data_info(self) -> None:
         """
