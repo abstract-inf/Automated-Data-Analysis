@@ -1,3 +1,4 @@
+import os
 from sklearn.feature_selection import RFE
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import LinearRegression
@@ -37,9 +38,10 @@ def model_data(df: pd.DataFrame, target_col: str,n: int = 1000, model_type: str 
 
   with open(json_path, 'w') as f:
    selected_features = X.columns[rfe.support_].tolist()
+   selected_features.append(target_col)  # Include the target column
    json.dump(selected_features, f, indent=4)
    print("Selected features saved to 'selected_features.json'")
-  return selected_features
+  return selected_features.append(target_col)
  return None
 
 def model_selection(df: pd.DataFrame, target_col: str, model_type: str = 'classification') -> dict:
@@ -95,13 +97,11 @@ def model_selection(df: pd.DataFrame, target_col: str, model_type: str = 'classi
 
 if __name__ == "__main__":
  # Example usage
- data = pd.DataFrame({
-  'feature1': [1, 2, 3, 4, 5],
-  'feature2': [5, 4, 3, 2, 1],
-  'feature3': [2, 3, 4, 5, 6],
-  'feature4': [10, 20, 30, 40, 50],
-  'target': [0, 1, 0, 1, 0]
- })
- 
- results = model_data(data, target_col='target',model_type='classification')
- print(results)
+ data_path = Path(r'C:\Users\DELL\OneDrive - AL-Hussien bin Abdullah Technical University\Attachments\HTU\Projects\Automated-Data-Analysis\ADA\saved_data')
+ data = pd.read_csv(data_path / 'transformed_data.csv')
+ data.dropna(inplace=True)  # Drop rows with NaN values
+
+ #print(data.info())  # Ensure no NaN values for modeling
+
+ results = model_data(data, target_col='Survived',model_type='classification')
+ #print(results)

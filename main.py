@@ -1,16 +1,30 @@
 # main.py
-from sklearn.datasets import load_iris
-
+from sklearn.datasets import fetch_openml
 from ADA import ADA
 
-# Load sample data
-data = load_iris(as_frame=True).frame
-# print(data.head())
+def load_titanic():
+    """Load Titanic dataset from OpenML"""
+    data = fetch_openml('titanic', version=1, as_frame=True)
+    df = data.frame
+    # Rename target column if needed
+    if 'survived' in df.columns:
+        df = df.rename(columns={'survived': 'target'})
+    return df
 
-# Initialize ADA object with the data
-object = ADA(data, target_column='target')
-object.preprocess()
-object.visualize()
-object.save_to_pdf()
+def main():
+    # Load data
+    data = load_titanic()
+    #print("Data loaded successfully. Shape:", data.shape)
+    #print("Columns:", data.columns.tolist())
+    # Initialize ADA object
+    analyzer = ADA(data, target_column='target')  # or 'survived' depending on your dataset
+    
+    # Process and visualize
+    analyzer.preprocess()
+    analyzer.visualize()
+    analyzer.save_to_pdf()
+    
+    print("Analysis completed successfully!")
 
-print("Can you see me?")
+if __name__ == "__main__":
+    main()

@@ -90,6 +90,6 @@ def export_transformed_data(df: pd.DataFrame, file_path: str) -> None:
 
 
 if __name__ == "__main__":
- transform_data(pd.read_csv(r'C:\Users\DELL\OneDrive - AL-Hussien bin Abdullah Technical University\Attachments\HTU\Projects\Automated-Data-Analysis\ADA\datasets\coffe.csv'))
+ transform_data(pd.read_csv(r'C:\Users\DELL\OneDrive - AL-Hussien bin Abdullah Technical University\Attachments\HTU\Projects\Automated-Data-Analysis\ADA\datasets\titanic.csv'))
 
  

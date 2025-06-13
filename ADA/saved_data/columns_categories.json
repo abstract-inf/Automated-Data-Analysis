@@ -1,18 +1,24 @@
 {
     "continuous": [
-        "money"
+        "Age",
+        "Fare"
     ],
-    "discrete": [],
+    "discrete": [
+        "PassengerId"
+    ],
     "nominal": [],
     "ordinal": [
-        "cash_type",
-        "coffee_name"
+        "Survived",
+        "Pclass",
+        "Sex",
+        "SibSp",
+        "Parch",
+        "Embarked"
     ],
     "string": [
-        "card"
+        "Name",
+        "Ticket",
+        "Cabin"
     ],
-    "datetime": [
-        "date",
-        "datetime"
-    ]
+    "datetime": []
 }

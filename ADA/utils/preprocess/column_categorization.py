@@ -28,9 +28,11 @@ def categorize_columns(df: pd.DataFrame, target: str) -> dict:
    
    if is_continuous(df[col]):
     columns_categories['continuous'].append(col)
-   
-   else:
+   elif is_discrete(df[col]):
+    # Check if the column is discrete based on a threshold (e.g., more than 5% unique values)
     columns_categories['discrete'].append(col)
+   else:
+    columns_categories['ordinal'].append(col)
   
   elif is_object(df[col]):
   
@@ -71,14 +73,16 @@ def is_numeric(col):
 def is_continuous(col):
  """Check if a numeric column is continuous."""
  return pd.api.types.is_float_dtype(col)
-
+def is_discrete(col):
+  """Check if a numeric column is discrete."""
+  return pd.api.types.is_integer_dtype(col) and col.nunique()/len(col) > 0.05 # Arbitrary threshold for discrete data
 def is_object(col):
  """Check if a column is of object type."""
  return pd.api.types.is_object_dtype(col)
 
 def is_categorical(col):
  """Check if a column is categorical."""
- return col.nunique()/len(col) < 0.05  # Arbitrary threshold for categorical data
+ return col.nunique()/len(col) <= 0.05  # Arbitrary threshold for categorical data
 
 def is_ordinal(col: pd.Series, target_col: pd.Series, threshold: float = 0.05) -> bool:
  """check if a categorical column is ordinal or nominal."""
@@ -144,10 +148,10 @@ if __name__ == "__main__":
  path = r"C:\Users\DELL\OneDrive - AL-Hussien bin Abdullah Technical University\Attachments\HTU\Projects\Automated-Data-Analysis\ADA\datasets"
  targets = ['Boxes Shipped','money', 'Outcome', 'liveness_%','Survived']
  for file, target in zip(os.listdir(path),targets):
-  if file.endswith('.csv') and file == 'coffe.csv':
+  if file.endswith('.csv') and file == 'titanic.csv':
    print(f"Processing file: {file} with target: {target}")
    df = pd.read_csv(os.path.join(path, file))
-   result = categorize_columns(df, target)
+   result = categorize_columns(df, 'Survived')
    print(result, "\n\n")
  #df = pd.read_csv(r"C:\Users\DELL\OneDrive - AL-Hussien bin Abdullah Technical University\Attachments\HTU\Projects\Automated-Data-Analysis\ADA\datasets\coffe.csv")
  
