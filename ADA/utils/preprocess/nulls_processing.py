@@ -1,5 +1,5 @@
 import pandas as pd
-from nulls_checking import check_nulls
+from .nulls_checking import check_nulls
 
 def nulls_processing(df: pd.DataFrame, strategy: str = "drop") -> pd.DataFrame:
         """

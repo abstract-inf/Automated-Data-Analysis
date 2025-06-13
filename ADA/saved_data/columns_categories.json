@@ -6,19 +6,19 @@
     "discrete": [
         "PassengerId"
     ],
-    "nominal": [],
+    "nominal": [
+        "Embarked"
+    ],
     "ordinal": [
         "Survived",
         "Pclass",
         "Sex",
         "SibSp",
-        "Parch",
-        "Embarked"
+        "Parch"
     ],
     "string": [
         "Name",
-        "Ticket",
-        "Cabin"
+        "Ticket"
     ],
     "datetime": []
 }

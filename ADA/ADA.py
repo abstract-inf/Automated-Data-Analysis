@@ -34,8 +34,8 @@ class ADA:
 if __name__ == "__main__":
     # Example usage
 
-    target_column = 'target'  # Specify your target column name
-    ada = ADA(data=None, target=target_column, k_features=1000, problem_type='classification')
+    target_column = 'Survived'  # Specify your target column name
+    ada = ADA(data=pd.read_csv('ADA/datasets/titanic.csv'), target=target_column, k_features=1000, problem_type='classification')
 
     ada.preprocess()
     ada.visualize()

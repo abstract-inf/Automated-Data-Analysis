@@ -1,5 +1,5 @@
 import pandas as pd
-import  nulls_processing, column_categorization, data_transformation
+from . import nulls_processing, column_categorization, data_transformation
 """
 Test
 """
@@ -21,7 +21,7 @@ def preprocess_data(df: pd.DataFrame, target: str) -> pd.DataFrame:
     column_categorization.categorize_columns(df, target)
 
     # Transform the DataFrame based on the categorized columns
-    data_transformation.transform_data(df, column_categorization.columns_categories)
+    data_transformation.transform_data(df)
 
 
 if __name__ == "__main__":
