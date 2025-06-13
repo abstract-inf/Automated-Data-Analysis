@@ -54,10 +54,8 @@ def transform_discrete_columns(df, columns_categories):
 def transform_nominal_columns(df, columns_categories):
  """<b>Transform nominal columns using OneHotEncoder.</b>"""
  for col in columns_categories['nominal']:
-  encoder = OneHotEncoder(sparse_output=False, drop='first')
-  transformed = encoder.fit_transform(df[[col]])
-  df = df.drop(col, axis=1)
-  df = pd.concat([df, pd.DataFrame(transformed, columns=encoder.get_feature_names_out([col]))], axis=1)
+  encoder = LabelEncoder()
+  df[col] = encoder.fit_transform(df[col])
  return df
 
 def transform_ordinal_columns(df, columns_categories):

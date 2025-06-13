@@ -75,7 +75,7 @@ def is_continuous(col):
  return pd.api.types.is_float_dtype(col)
 def is_discrete(col):
   """Check if a numeric column is discrete."""
-  return pd.api.types.is_integer_dtype(col) and col.nunique()/len(col) > 0.05 # Arbitrary threshold for discrete data
+  return pd.api.types.is_integer_dtype(col) and col.nunique() > 10 # Arbitrary threshold for discrete data
 def is_object(col):
  """Check if a column is of object type."""
  return pd.api.types.is_object_dtype(col)

@@ -17,12 +17,11 @@ def main():
     #print("Data loaded successfully. Shape:", data.shape)
     #print("Columns:", data.columns.tolist())
     # Initialize ADA object
-    analyzer = ADA(data, target_column='target')  # or 'survived' depending on your dataset
+    analyzer = ADA(data_path="ADA/datasets/house_price.csv", target='median_house_value', problem_type='regression')
     
     # Process and visualize
     analyzer.preprocess()
     analyzer.visualize()
-    analyzer.save_to_pdf()
     
     print("Analysis completed successfully!")
 

@@ -10,16 +10,19 @@ import pandas as pd
 from pathlib import Path
 import json
 
-def model_data(df: pd.DataFrame, target_col: str,n: int = 1000, model_type: str = 'classification') -> None:
+def model_data(target_col: str,n: int = 1000, model_type: str = 'classification') -> None:
  """<b>Model the DataFrame using various machine learning algorithms.</b>
- 
- :param df: pd.DataFrame - The DataFrame to model.
+
  :param target_col: str - The name of the target column.
  :param n: int - Number of features to select using RFE (Recursive Feature Elimination).
  :param model_type: str - Type of model to use ('classification' or 'regression').
  :returns dict: A dictionary containing model performance metrics.
  
  """
+ with open(Path(__file__).parent.parent.parent / 'saved_data/transformed_data.csv', 'r') as f:
+    print(Path(__file__).parent.parent.parent)
+    df = pd.read_csv(f)
+
  selected_model = model_selection(df, target_col, model_type)
  X = df.drop(columns=[target_col])
  y = df[target_col]
@@ -56,7 +59,7 @@ def model_selection(df: pd.DataFrame, target_col: str, model_type: str = 'classi
  # Initialize models based on the type
  if model_type == 'classification':
   models = {
-   'Logistic Regression': LogisticRegression(max_iter=1000),
+   #'Logistic Regression': LogisticRegression(max_iter=1000),
    'Random Forest': RandomForestClassifier(),
    #'SVC': SVC(),
    'Decision Tree': DecisionTreeClassifier(),

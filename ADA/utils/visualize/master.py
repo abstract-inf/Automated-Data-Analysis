@@ -20,8 +20,9 @@ def ensure_directory(path: Path) -> Path:
         print(f"Error creating directory {path}: {str(e)}")
         sys.exit(1)
 
-def load_data(file_path: Path) -> pd.DataFrame:
+def load_data(file_path) -> pd.DataFrame:
     """Load data from CSV file with validation."""
+    file_path = Path(file_path)
     try:
         if not file_path.exists():
             raise FileNotFoundError(f"Data file not found: {file_path}")
@@ -44,7 +45,7 @@ def load_json(file_path: Path) -> dict:
 def import_categorical_visualization_functions():
     """Dynamically import visualization functions."""
     try:
-        spec = import_module("visualize_categorical_data")
+        spec = import_module("ADA.utils.visualize.visualize_categorical_data")
         return {
             'plot_dist': spec.plot_categorical_distribution,
             'plot_pie': spec.plot_categorical_piechart,
@@ -132,7 +133,7 @@ vn_path = current_dir / "visualize_numerical_data.py"
 def import_numerical_visualization_functions():
     """Dynamically import numerical visualization functions."""
     try:
-        spec = import_module("visualize_numerical_data")
+        spec = import_module("ADA.utils.visualize.visualize_numerical_data")
         return {
             'plot_distribution': spec.plot_numerical_distribution,
             'plot_boxplot': spec.plot_numerical_boxplot,
@@ -185,7 +186,7 @@ def visulize_numerical_data(
                 for other_column in num_columns:
                     if other_column != column:
                         try:
-                            fig, _ = viz['plot_scatter'](data, column, other_column, target_col)
+                            fig, _ = viz['plot_scatter'](data, column, other_column,  target_col) 
                             fig.savefig(
                                 scatter_path / f"{column}_vs_{other_column}_scatter.png",
                                 bbox_inches='tight'
@@ -200,8 +201,8 @@ def visualize_data(
 ) -> None:
     """Main function to visualize both categorical and numerical data."""
     print("Starting visualization process...")
-    visualize_categorical_data(data_file, data_path / "columns_categories.json", data_path / "selected_features.json", save_path)
-    visulize_numerical_data(data_file, data_path / "columns_categories.json", data_path / "selected_features.json", save_path)
+    visualize_categorical_data(data_file, data_path / "columns_categories.json", data_path / "selected_features.json", save_path, target_col)
+    visulize_numerical_data(data_file, data_path / "columns_categories.json", data_path / "selected_features.json", save_path, target_col)
     print("Visualization process completed.")
 if __name__ == "__main__":
     # Configure paths
